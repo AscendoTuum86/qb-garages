@@ -15,7 +15,7 @@ AddEventHandler('qb-garages:server:UpdateOutsideVehicles', function(Vehicles)
     OutsideVehicles[CitizenId] = Vehicles
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleOwner", function(source, cb, plate)
+QBCore.Functions.CreateCallback("qb-garages:server:checkVehicleOwner", function(source, cb, plate)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
@@ -28,7 +28,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleOwner", function(s
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetOutsideVehicles", function(source, cb)
+QBCore.Functions.CreateCallback("qb-garages:server:GetOutsideVehicles", function(source, cb)
     local Ply = QBCore.Functions.GetPlayer(source)
     local CitizenId = Ply.PlayerData.citizenid
 
@@ -39,7 +39,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetOutsideVehicles", function(
     end
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetUserVehicles", function(source, cb, garage)
+QBCore.Functions.CreateCallback("qb-garages:server:GetUserVehicles", function(source, cb, garage)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
@@ -52,7 +52,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetUserVehicles", function(sou
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", function(source, cb, plate)
+QBCore.Functions.CreateCallback("qb-garages:server:GetVehicleProperties", function(source, cb, plate)
     local src = source
     local properties = {}
     QBCore.Functions.ExecuteSql(false, "SELECT `mods` FROM `player_vehicles` WHERE `plate` = '"..plate.."'", function(result)
@@ -63,7 +63,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetVehicleProperties", functio
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetDepotVehicles", function(source, cb)
+QBCore.Functions.CreateCallback("qb-garages:server:GetDepotVehicles", function(source, cb)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
@@ -76,7 +76,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetDepotVehicles", function(so
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:GetHouseVehicles", function(source, cb, house)
+QBCore.Functions.CreateCallback("qb-garages:server:GetHouseVehicles", function(source, cb, house)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
@@ -89,7 +89,7 @@ QBCore.Functions.CreateCallback("qb-garage:server:GetHouseVehicles", function(so
     end)
 end)
 
-QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleHouseOwner", function(source, cb, plate, house)
+QBCore.Functions.CreateCallback("qb-garages:server:checkVehicleHouseOwner", function(source, cb, plate, house)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
     exports['ghmattimysql']:execute('SELECT * FROM player_vehicles WHERE plate = @plate', {['@plate'] = plate}, function(result)
@@ -106,8 +106,8 @@ QBCore.Functions.CreateCallback("qb-garage:server:checkVehicleHouseOwner", funct
     end)
 end)
 
-RegisterServerEvent('qb-garage:server:PayDepotPrice')
-AddEventHandler('qb-garage:server:PayDepotPrice', function(vehicle, garage)
+RegisterServerEvent('qb-garages:server:PayDepotPrice')
+AddEventHandler('qb-garages:server:PayDepotPrice', function(vehicle, garage)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local bankBalance = Player.PlayerData.money["bank"]
@@ -124,16 +124,16 @@ AddEventHandler('qb-garage:server:PayDepotPrice', function(vehicle, garage)
     end)
 end)
 
-RegisterServerEvent('qb-garage:server:updateVehicleState')
-AddEventHandler('qb-garage:server:updateVehicleState', function(state, plate, garage)
+RegisterServerEvent('qb-garages:server:updateVehicleState')
+AddEventHandler('qb-garages:server:updateVehicleState', function(state, plate, garage)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 
     exports['ghmattimysql']:execute('UPDATE player_vehicles SET state = @state, garage = @garage, depotprice = @depotprice WHERE plate = @plate', {['@state'] = state, ['@plate'] = plate, ['@depotprice'] = 0, ['@citizenid'] = pData.PlayerData.citizenid, ['@garage'] = garage})
 end)
 
-RegisterServerEvent('qb-garage:server:updateVehicleStatus')
-AddEventHandler('qb-garage:server:updateVehicleStatus', function(fuel, engine, body, plate, garage)
+RegisterServerEvent('qb-garages:server:updateVehicleStatus')
+AddEventHandler('qb-garages:server:updateVehicleStatus', function(fuel, engine, body, plate, garage)
     local src = source
     local pData = QBCore.Functions.GetPlayer(src)
 

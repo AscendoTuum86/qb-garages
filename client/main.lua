@@ -21,7 +21,7 @@ local PlayerGang = {}
 
 -- RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
 -- AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
---     QBCore.Functions.TriggerCallback('qb-garage:server:GetOutsideVehicles', function(result)
+--     QBCore.Functions.TriggerCallback('qb-garages:server:GetOutsideVehicles', function(result)
 --         if result ~= nil then
 --             OutsideVehicles = result
 --         else
@@ -68,7 +68,7 @@ AddEventHandler('qb-garages:client:takeOutDepot', function(vehicle)
             local Engine = GetVehicleEngineHealth(OutsideVehicles[vehicle.plate])
             -- if Engine <= 50.0 then
                 QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                    QBCore.Functions.TriggerCallback('qb-garage:server:GetVehicleProperties', function(properties)
+                    QBCore.Functions.TriggerCallback('qb-garages:server:GetVehicleProperties', function(properties)
                         QBCore.Functions.SetVehicleProperties(veh, properties)
                         enginePercent = round(vehicle.engine / 10, 0)
                         bodyPercent = round(vehicle.body / 10, 0)
@@ -102,7 +102,7 @@ AddEventHandler('qb-garages:client:takeOutDepot', function(vehicle)
             -- end
         else
             QBCore.Functions.SpawnVehicle(vehicle.vehicle, function(veh)
-                QBCore.Functions.TriggerCallback('qb-garage:server:GetVehicleProperties', function(properties)
+                QBCore.Functions.TriggerCallback('qb-garages:server:GetVehicleProperties', function(properties)
                     QBCore.Functions.SetVehicleProperties(veh, properties)
                     enginePercent = round(vehicle.engine / 10, 0)
                     bodyPercent = round(vehicle.body / 10, 0)
@@ -119,7 +119,7 @@ AddEventHandler('qb-garages:client:takeOutDepot', function(vehicle)
                     exports['LegacyFuel']:SetFuel(veh, vehicle.fuel)
                     SetEntityAsMissionEntity(veh, true, true)
                     doCarDamage(veh, vehicle)
-                    TriggerServerEvent('qb-garage:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
+                    TriggerServerEvent('qb-garages:server:updateVehicleState', 0, vehicle.plate, vehicle.garage)
                     QBCore.Functions.Notify("Vehicle Off:Engine " .. enginePercent .. "% Body: " .. bodyPercent.. "% Fuel: "..currentFuel.. "%", "primary", 4500)
                     TriggerEvent("vehiclekeys:client:SetOwner", GetVehicleNumberPlateText(veh))
                     closeMenuFull()
@@ -244,7 +244,7 @@ end
 function HouseGarage(house)
     QBCore.Functions.TriggerCallback("qb-garage:server:GetHouseVehicles", function(result)
         ped = PlayerPedId();
-        MenuTitle = "Depot Vehicles :"
+        MenuTitle = "Depot Vehicles:"
         ClearMenu()
 
         if result == nil then
@@ -329,7 +329,7 @@ function VehicleList()
             QBCore.Functions.Notify("You have no vehicles in this garage", "error", 5000)
             closeMenuFull()
         else
-            Menu.addButton(Garages[currentGarage].label, "VehicleList", Garages[currentGarage].label)
+            Menu.addButton(Garages[currentGarage].label, "Vehicle List", Garages[currentGarage].label)
 
             for k, v in pairs(result) do
                 enginePercent = round(v.engine / 10, 0)
@@ -359,7 +359,7 @@ function VehicleList()
 end
 
 function GangVehicleList()
-    QBCore.Functions.TriggerCallback("qb-garage:server:GetUserVehicles", function(result)
+    QBCore.Functions.TriggerCallback("qb-garages:server:GetUserVehicles", function(result)
         ped = PlayerPedId();
         MenuTitle = "My Vehicles :"
         ClearMenu()
@@ -660,7 +660,7 @@ Citizen.CreateThread(function()
                     if IsControlJustPressed(0, 38) then
                         local curVeh = GetVehiclePedIsIn(ped)
                         local plate = GetVehicleNumberPlateText(curVeh)
-                        QBCore.Functions.TriggerCallback('qb-garage:server:checkVehicleOwner', function(owned)
+                        QBCore.Functions.TriggerCallback('qb-garages:server:checkVehicleOwner', function(owned)
                             if owned then
                                 local bodyDamage = math.ceil(GetVehicleBodyHealth(curVeh))
                                 local engineDamage = math.ceil(GetVehicleEngineHealth(curVeh))
